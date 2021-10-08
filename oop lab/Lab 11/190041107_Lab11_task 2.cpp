@@ -13,21 +13,21 @@ class footballer
 {
 private:
     int jersey_code;
-    string name;
+    unsigned long nameid;
     static int n;
-    static footballer* arrst[];
+    static footballer* arrf[];
 public:
     virtual void set_info()
     {
         cout<<"Enter Jersey Code: ";
         cin>>jersey_code;
-        cout<<"Enter Name: ";
-        cin>>name;
+        cout<<"Enter NameTag: ";
+        cin>>nameid;
     }
     virtual void get_info()
     {
-        cout<<"Name: "<<name<<endl;
-        cout<<"Code: "<<jersey_code<<endl;
+        cout<<"NameTag: "<<nameid<<endl;
+        cout<<"Jersey Code: "<<jersey_code<<endl;
     }
     virtual footballer_type get_type();
     static void add();
@@ -37,13 +37,13 @@ public:
 };
 
 int footballer::n;
-footballer* footballer::arrst[MAX];
+footballer* footballer::arrf[MAX];
 
 class Goalkeeper:public footballer
 {
 private:
-    string haircolor;
-    string jerseysize;
+    unsigned long haircolor;
+    unsigned long jerseysize;
 public:
     void set_info()
     {
@@ -64,7 +64,7 @@ public:
 class Striker:public footballer
 {
 private:
-    string Goals;
+    unsigned long Goals;
 public:
     void set_info()
     {
@@ -90,15 +90,15 @@ void footballer::add()
     switch(i)
     {
     case 1:
-        arrst[n]=new Striker;
+        arrf[n]=new Striker;
         break;
     case 2:
-        arrst[n]=new Goalkeeper;
+        arrf[n]=new Goalkeeper;
         break;
     default:
         cout<<"Error in Input"<<endl;
     }
-    arrst[n++]->set_info();
+    arrf[n++]->set_info();
 }
 
 void footballer::display()
@@ -106,7 +106,7 @@ void footballer::display()
     for(int j=0; j<n; j++)
     {
         cout<<"Footballer No: "<<(j+1)<<endl;
-        switch(arrst[j]->get_type())
+        switch(arrf[j]->get_type())
         {
         case estriker:
             cout<<"footballer Type : Striker"<<endl;
@@ -117,10 +117,12 @@ void footballer::display()
         default:
             cout<<"Error Occurred"<<endl;
         }
-        arrst[j]->get_info();
+        arrf[j]->get_info();
+        cout<<endl;
     }
 }
 
+//return type of the object
 footballer_type footballer::get_type()
 {
     if(typeid(*this)==typeid(Goalkeeper))
@@ -154,7 +156,7 @@ void footballer::write()
     for(int j=0; j<n; j++) //for every footballer object
     {
         //get its type
-        stype = arrst[j]->get_type();
+        stype = arrf[j]->get_type();
         //write type to file
         ouf.write( (char*)&stype, sizeof(stype) );
         switch(stype) //find its size
@@ -166,7 +168,7 @@ void footballer::write()
             sizee=sizeof(Striker);
             break;
         } //write footballer object to file
-        ouf.write( (char*)(arrst[j]), sizee );
+        ouf.write( (char*)(arrf[j]), sizee );
         if(!ouf)
         {
             cout << "\nCan't write to file"<<endl;
@@ -203,18 +205,18 @@ void footballer::read()
         {
         //make new footballer
         case egoalkeeper: //of correct type
-            arrst[n] = new Goalkeeper;
+            arrf[n] = new Goalkeeper;
             sizee=sizeof(Goalkeeper);
             break;
         case estriker:
-            arrst[n] = new Striker;
+            arrf[n] = new Striker;
             sizee=sizeof(Striker);
             break;
         default:
             cout << "\nUnknown type in file"<<endl;
             return;
         } //read data from file into it
-        inf.read( (char*)arrst[n], sizee );
+        inf.read( (char*)arrf[n], sizee );
         if(!inf) //error but not eof
         {
             cout << "\nCan't read data from file"<<endl;
