@@ -22,7 +22,6 @@ public:
         {
             st[a++] = n;
         }
-
     }
     Type pop()
     {

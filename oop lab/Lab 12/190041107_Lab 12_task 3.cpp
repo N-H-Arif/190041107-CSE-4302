@@ -11,6 +11,10 @@ public:
     class Range
     {
     };
+    /*class Max
+    {
+
+    };*/
     Stack()
     {
         a = 0;
@@ -19,6 +23,7 @@ public:
     {
         if(a >= MAX)
         {
+            //throw Max();
             cout<<"Maximum Limit Reached"<<endl;
         }
         else
@@ -46,6 +51,7 @@ public:
         }
         else
         {
+            //throw Range();
             cout<<"No Elements"<<endl;
         }
     }
@@ -63,6 +69,10 @@ int main()
     {
         cout << "Exception: Float Stack Empty" << endl;
     }
+    /*catch(Stack<float>::Max)
+    {
+        cout << "Exception: Float Stack Full" << endl;
+    }*/
     try
     {
         cout << s2.pop() << endl;
@@ -71,6 +81,10 @@ int main()
     {
         cout << "Exception: Long Stack Empty" << endl;
     }
+    /*catch(Stack<long>::Max)
+    {
+        cout << "Exception: Long Stack Full" << endl;
+    }*/
     return 0;
 }
 
